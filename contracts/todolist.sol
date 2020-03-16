@@ -1,4 +1,4 @@
-pragma solidity 0.6.3;
+pragma solidity 0.5.9;
 pragma experimental ABIEncoderV2;
 
 contract todolist{
@@ -10,11 +10,11 @@ contract todolist{
     struct tasks{
         string value;
     }
-    tasks[] task;
-    userData[] usersData;
+    tasks[] public  task;
+    userData[] public usersData;
 
 
-    mapping(address => uint) paymentDetails;
+    mapping(address => uint) public paymentDetails;
     //mapping(address => string[]) data;
 
 
@@ -42,9 +42,18 @@ contract todolist{
         return item;
     }
 
-    // function delete() public returns(bool){
-    //     require(paymentDetails[msg.sender] >= 0.5 ether,"register yourself first");
-    // }
+    function deleteItem(uint _index) public returns(bool){
+        require(paymentDetails[msg.sender] >= 0.5 ether,"register yourself first");
+        if(_index >= task.length) return false;
+
+        for(uint i=_index; i<task.length -1; i++){
+            task[i] = task[i+1];
+        }
+        delete task[task.length-1];
+        task.length -= 1;
+        return true;
+
+    }
 
 
 
