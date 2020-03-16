@@ -1,0 +1,22 @@
+body{
+    background-color: rgb(231, 86, 86);
+}
+header{
+    padding: 4%;
+}
+header>h1{
+    text-align: center;
+    font-family: 'Oswald',sans-serif;
+}
+.search{
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-bottom: 2%;
+}
+#list{
+    padding-left: 17%;
+    padding-right: 17%;
+}
+#deleteBtn{
+    margin-left: 65%;
+}
