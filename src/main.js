@@ -208,6 +208,7 @@ let contract = new web3.eth.Contract(abi, contractAddress);
 let account;
 let array = [''];
 let btn = document.getElementById('taskBtn');
+let delBtn = document.getElementById('deleteBtn')
 
 web3.eth.getAccounts().then((r) => {
   account = r[0];
@@ -231,14 +232,44 @@ function addTask(){
 }
 
 function deleteTask() {
-  contract.methods.deleteItem().send( { from: account, gas: 400000} ).then( (r) => {console.log(r)})
+  for(var i = 0; i < items.length; i++){
+      
+      items[i].onclick = function(){
+      liIndex = tab.indexOf(this.innerHTML);
+      contract.methods.deleteItem(liIndex).send( { from: account, gas: 400000} ).then( (r) => {console.log(r)})
+      console.log(this.innerHTML + " INDEX = " + liIndex);
+      };
+    }
 }
 
 function fetchData() {
     contract.methods.read().call().then( (r)  => {array = r});
 }
 
-btn.addEventListener('click', function() {displayDataOnList()})
+contract.methods.read().call().then( (r)  => {array = r});
+
+var liIndex;
+var tab = [];
+var items;
+
+function querLi(){
+  var item = document.querySelectorAll("li");
+  items = item;
+  // populate tab with li data
+  for(var i = 0; i < items.length; i++){
+      tab.push(items[i].innerHTML);
+  }
+  // get li index using tab array on li click event
+  for(var i = 0; i < items.length; i++){
+      
+      items[i].onclick = function(){
+      liIndex = tab.indexOf(this.innerHTML);
+      console.log(this.innerHTML + " INDEX = " + liIndex);
+      };
+      
+  }
+}
+
 
 function displayDataOnList() {
   for(i=0; i<array.length; i++){
@@ -248,33 +279,13 @@ function displayDataOnList() {
     var button = document.createElement("button");
     button.innerHTML = "Delete Task";
     li.appendChild(button);
-    li.setAttribute('class', 'list-group-item li');
+    li.setAttribute('class', 'list-group-item ');
+    li.setAttribute('id', 'li');
     button.setAttribute('class', 'btn btn-outline-danger')
     button.setAttribute('id', 'deleteBtn')
+    button.setAttribute('onClick', 'deleteTask()')
     ul.appendChild(li);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+setTimeout(function() {displayDataOnList() }, 1000);
+setTimeout(function() {querLi() }, 2000);
