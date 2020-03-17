@@ -40,15 +40,15 @@ contract todolist{
         return true;
     }
 
-    // function read() public view returns(string[] memory){
-    //     require(paymentDetails[msg.sender] >= 0.5 ether,"register yourself first");
+    function read() public view returns(string[] memory){
+        require(paymentDetails[msg.sender] >= 0.5 ether,"register yourself first");
 
-    //     string[] memory item = new string[](task.length);
-    //     for(uint i=0; i<task.length; i++){
-    //         item[i] = task[i].value;
-    //     }
-    //     return item;
-    // }
+        string[] memory item = new string[](task.length);
+        for(uint i=0; i<task.length; i++){
+            item[i] = task[i].value;
+        }
+        return item;
+    }
 
     function deleteItem(uint _index) public returns(bool){
         require(paymentDetails[msg.sender] >= 0.5 ether,"register yourself first");

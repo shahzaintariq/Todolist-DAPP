@@ -11,7 +11,7 @@
     <title>Document</title>
 </head>
 
-<body>
+<body onload=fetchData()>
     <header>
             <h1>TODO LIST(ON Ethereum Blockchain)</h1>
     </header>
@@ -27,19 +27,14 @@
 
 
     <ul class="list-group" id="list">
-        <li class="list-group-item">i want to do somethinh
-            <button type="button" class="btn btn-outline-danger"  id="deleteBtn">Delete Task</button>
-        </li>
+        <!-- <li class="list-group-item"> njk
+           <span><button type="button" class="btn btn-outline-danger"  id="deleteBtn">Delete Task</button></span>
+        </li> -->
         <!-- <li class="list-group-item">Cras justo odio</li>
         <li class="list-group-item">Morbi leo risus</li>
         <li class="list-group-item">Porta ac consectetur ac</li>
         <li class="list-group-item">Vestibulum at eros</li> -->
-      </ul>
-
-
-
-
-
+        <!-- </ul><button type="button" class="btn btn-outline-danger"  id="deleteBtn">Delete Task</button> -->
 
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

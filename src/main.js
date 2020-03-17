@@ -1,6 +1,39 @@
 const web3 = new Web3('HTTP://127.0.0.1:8545');
 
-const abi = [
+const abi =[
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "task",
+    "outputs": [
+      {
+        "name": "value",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "length",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
   {
     "constant": true,
     "inputs": [
@@ -169,13 +202,15 @@ const abi = [
   }
 ]
 
-const contractAddress = '0x8b557c013939771030C7dd63eFd3aeb9a8A95282'
+const contractAddress = '0xC72e33Bbe1b711d374d27D5DD9e2FE9F30B20478';
 
 let contract = new web3.eth.Contract(abi, contractAddress);
-
 let account;
+let array = [''];
+let btn = document.getElementById('taskBtn');
+
 web3.eth.getAccounts().then((r) => {
-  account = r[1];
+  account = r[0];
 })
 
 function registerYourSelf(_name) {
@@ -188,6 +223,8 @@ function registerYourSelf(_name) {
   )
 }
 
+
+
 function addTask(){
   value = document.getElementById('input').value;
   contract.methods.create(value).send({ from: account, gas: 400000 }).then( (r) => {console.log(r)});
@@ -198,19 +235,24 @@ function deleteTask() {
 }
 
 function fetchData() {
-  contract.methods.read().send( {from: account, gas: 4000000} ).then( (r) => {console.log(r)} );
+    contract.methods.read().call().then( (r)  => {array = r});
+}
 
-  // var ul = document.getElementById("list");
-  // var li = document.createElement("li");
-  // li.appendChild(document.createTextNode("insinidnid"));
-  // var button = document.createElement("button");
-  // button.innerHTML = "Delete Task";
-  // li.appendChild(button);
-  // li.setAttribute('class', 'list-group-item');
-  // button.setAttribute('class', 'btn btn-outline-danger')
-  // button.setAttribute('id', 'deleteBtn')
-  // ul.appendChild(li);
-  
+btn.addEventListener('click', function() {displayDataOnList()})
+
+function displayDataOnList() {
+  for(i=0; i<array.length; i++){
+    var ul = document.getElementById("list");
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode(array[i]));
+    var button = document.createElement("button");
+    button.innerHTML = "Delete Task";
+    li.appendChild(button);
+    li.setAttribute('class', 'list-group-item li');
+    button.setAttribute('class', 'btn btn-outline-danger')
+    button.setAttribute('id', 'deleteBtn')
+    ul.appendChild(li);
+    }
 }
 
 
