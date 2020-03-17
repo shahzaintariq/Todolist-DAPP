@@ -11,8 +11,8 @@ contract todolist{
     struct tasks{
         string value;
     }
-    tasks[] public  task;
-    //userData[] public usersData;
+    tasks[] public task;
+    uint public length;
 
     mapping(address => userData) public finalData;
     mapping(address => uint) public paymentDetails;
@@ -25,7 +25,6 @@ contract todolist{
         require(msg.value >= 0.5 ether,"You should have minimun of 0.5 ether");
         ranId++;
         paymentDetails[msg.sender] = msg.value;
-        //usersData.push(userData(ranId,_name,msg.sender));
         finalData[msg.sender].id = ranId;
         finalData[msg.sender].name = _name;
         finalData[msg.sender].Address = msg.sender; 
@@ -36,6 +35,7 @@ contract todolist{
     function create(string memory _data) public returns(bool){
         require(paymentDetails[msg.sender] >= 0.5 ether,"register yourself first");
         task.push(tasks(_data));
+        length = task.length;
         emit addedTask(finalData[msg.sender].id,finalData[msg.sender].name,finalData[msg.sender].Address,_data);
         return true;
     }
